@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>Twitter自動化アプリ</title>
+  <link rel="stylesheet" type="text/css" href="login.css" media="all" />
+</head>
+
+<body>
+  <h1>Twitter自動化アプリ</h1>
+  <div id="form">
+    <p class="form-title">自動フォロー</p>
+    <form action="{% url 'auto_twt_follow' %}" method="post" name="Login">
+      {% csrf_token %}
+      <p>キーワード</p>
+      <p class="keyword"><input type="text" name="keyword" maxlength="32" autocomplete="OFF" /></p>
+      <button type="submit">実行</button>
+    </form>
+
+  </div>
+
+</body>
+
+</html>
