@@ -8,6 +8,8 @@ from logging import basicConfig, getLogger, DEBUG
 from twt_coop.models import OAuthTokenTemp
 import traceback
 import tweepy
+from .forms import TwitteAutoFollowForm
+
 # これはメインのファイルにのみ書く
 basicConfig(level=DEBUG)
 # これはすべてのファイルに書く
@@ -102,59 +104,65 @@ def twitter_controller(request):
 
 
 def auto_twt_follow(request):
-    if 'oauth_token' in request.session and 'oauth_token_secret' in request.session:
-        # カスタマーキー
-        CK = config.CONSUMER_KEY
-        CS = config.CONSUMER_SECRET
+    if request.method == "POST":
+        form = TwitteAutoFollowForm(data=request.POST)
+        if form.is_valid():
+            q = form.cleaned_data.get('keyword') # ツイート検索キー
+            count = form.cleaned_data.get('maxFollowInt')  # 取得数
+            if 'oauth_token' in request.session and 'oauth_token_secret' in request.session:
+                # カスタマーキー
+                CK = config.CONSUMER_KEY
+                CS = config.CONSUMER_SECRET
 
-        # アクセストークン
-        AT = request.session['oauth_token']
-        AS = request.session['oauth_token_secret']
+                # アクセストークン
+                AT = request.session['oauth_token']
+                AS = request.session['oauth_token_secret']
 
-        auth = tweepy.OAuthHandler(CK, CS)
-        auth.set_access_token(AT, AS)
-        logger.debug('認証できてる？？？？？？？？？？？？？？？？？')
-        # インスタンス生成
-        api = tweepy.API(auth)
-        q = ""  # ツイート検索キー
-        count = 10  # 取得数
+                auth = tweepy.OAuthHandler(CK, CS)
+                auth.set_access_token(AT, AS)
+                logger.debug('認証できてる？？？？？？？？？？？？？？？？？')
+                # インスタンス生成
+                api = tweepy.API(auth)
+                search_result = api.search(q=q, count=count)
 
-        search_result = api.search(q=q, count=count)
-
-        for result in search_result:
-            # ユーザID取得
-            username = result.user._json['screen_name']
-            print("")
-            print("")
-            print("表示ユーザID：@{0}".format(username))
-            # ツイートからユーザID取得
-            user_id = result.id
-            print("ツイートID：{0}".format(user_id))
-            user = result.user.name
-            print("ユーザ名：{0}".format(user))
-            tweet = result.text
-            print("***************************ツイート内容*******************************")
-            print(tweet)
-            print("********************************************************************")
-            time = result.created_at
-            print(time)
-            try:
-                api.create_favorite(user_id)
-                print("いいねしました")
-                # api.retweet(user_id)
-                # print("リツイートしました")
-                api.create_friendship(username)
-                print("フォローしました")
-            except:
-                traceback.print_exc()
-                print("既にフォロー中")
-        return redirect('auto_twitter')
+                for result in search_result:
+                    # ユーザID取得
+                    username = result.user._json['screen_name']
+                    print("")
+                    print("")
+                    print("表示ユーザID：@{0}".format(username))
+                    # ツイートからユーザID取得
+                    user_id = result.id
+                    print("ツイートID：{0}".format(user_id))
+                    user = result.user.name
+                    print("ユーザ名：{0}".format(user))
+                    tweet = result.text
+                    print("***************************ツイート内容*******************************")
+                    print(tweet)
+                    print("********************************************************************")
+                    time = result.created_at
+                    print(time)
+                    try:
+                        api.create_favorite(user_id)
+                        print("いいねしました")
+                        # api.retweet(user_id)
+                        # print("リツイートしました")
+                        api.create_friendship(username)
+                        print("フォローしました")
+                    except:
+                        traceback.print_exc()
+                        print("既にフォロー中")
+                return redirect('auto_twitter')
+            else:
+                logger.debug('クッキーに登録されてない')
+                return redirect('twitter_api_link')
     else:
-        logger.debug('クッキーに登録されてない')
-        return redirect('twitter_api_link')
-    # return render(request, 'page/auto_twitter.html', api)
+        form = TwitteAutoFollowForm()
+    return render(request, 'page/auto_twitter.html', {'form': form})
+            # return render(request, 'page/auto_twitter.html', api)
 
 
 def auto_twitter(request):
     logger.debug('画面を表示させます')
-    return render(request, 'page/auto_twitter.html')
+    form = TwitteAutoFollowForm()
+    return render(request, 'page/auto_twitter.html', {'form': form})

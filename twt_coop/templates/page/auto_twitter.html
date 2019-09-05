@@ -8,14 +8,15 @@
 </head>
 
 <body>
-  <h1>Twitter自動化アプリ</h1>
+  <h1>Twitter自動フォロー</h1>
   <div id="form">
-    <p class="form-title">自動フォロー</p>
     <form action="{% url 'auto_twt_follow' %}" method="post" name="Login">
       {% csrf_token %}
-      <p>キーワード</p>
-      <p class="keyword"><input type="text" name="keyword" maxlength="32" autocomplete="OFF" /></p>
+      <table>
+        {{form.as_table}}
+      </table>
       <button type="submit">実行</button>
+      <p>※連打すると設定値以上にフォローしてしまいますので、ご注意を。</p>
     </form>
 
   </div>
