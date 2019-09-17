@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '8lyu01df81a%zias$z=ti!2&^y+lcwp$pxq=29u0#e_$@(p+u_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['118.27.13.76']
 
 
 # Application definition
@@ -79,8 +79,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'my_web_db',
         'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'PASSWORD': 'YuChi1126!',
+        'HOST': '118.27.13.76',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
@@ -128,7 +128,6 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
 
 LOGGING = {
     'version': 1,
@@ -142,11 +141,11 @@ LOGGING = {
     'handlers': {
         'file': {
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '/var/log/httpd/django.log',  #環境に合わせて変更
+            'filename': '/var/log/httpd/django.log',  # 環境に合わせて変更
             'formatter': 'production',
             'level': 'DEBUG',
             'maxBytes': 1024 * 1024 * 100,  # サイズ（100MB)
-            'backupCount': 7, # 世代数
+            'backupCount': 7,  # 世代数
         },
         'console': {  # 標準出力
             'level': 'DEBUG',
@@ -156,15 +155,15 @@ LOGGING = {
     },
     'loggers': {
         # 自作したログ出力
-        'twt_coop': {
+        'mysite': {
             'handlers': ['file'],
             'level': 'DEBUG',
             'propagate': False,
         },
         # Djangoの警告・エラー
-        'mysite': {
+        'django': {
             'handlers': ['file'],
-            'level': 'INFO',
+            'level': 'DEBUG',
             'propagate': False,
         },
     },

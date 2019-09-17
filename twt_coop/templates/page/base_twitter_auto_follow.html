@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>Twitter自動化アプリ</title>
+    <!---<link rel="stylesheet" type="text/css" href="login.css" media="all" />-->
+</head>
+
+<body>
+    <h1>Twitter自動フォロー</h1>
+    <div id="form">
+        <form action="{% url 'at_twitter_val_validation' %}" method="post" name="auto_follow">
+            {% csrf_token %}
+            <table>
+                {{form.as_table}}
+            </table>
+            <button class="but" ,type="submit">実行</button>
+            <p>※連打すると設定値以上にフォローしてしまいますので、ご注意を。</p>
+        </form>
+    </div>
+    <div id="result">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Twitter_ID</th>Ï
+                    <th>フォロー結果</th>
+                </tr>
+            </thead>
+            {% block result %}{% endblock %}
+        </table>
+    </div>
+
+</body>
+
+</html>

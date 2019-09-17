@@ -13,3 +13,9 @@ class TwitteAutoFollowForm(forms.Form):
         validators=[MinValueValidator(1), MaxValueValidator(100)],
         required=True,
     )
+    def clean_maxFollowInt(self):
+        maxFollowInt = self.data.get('maxFollowInt')
+        castMaxFollowInt = int(maxFollowInt)
+        if 1 > castMaxFollowInt or castMaxFollowInt > 100:
+            raise forms.ValidationError(u'フォロー数は1~100の値で入力してください')
+        return maxFollowInt
