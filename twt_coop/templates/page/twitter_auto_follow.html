@@ -1,13 +1,11 @@
 {% extends 'page/base_twitter_auto_follow.html' %}
 
 {% block result %}
-<tbody>
   {% for follow in autoFollowRespList %}
   <tr>
     <td>@{{follow.screen_name}}</td>
     <td>{{follow.msg}}</td>
   </tr>
-</tbody>
 {% empty %}
 <p>条件に該当するアカウントが見つかりませんでした。</p>
 {% endfor %}

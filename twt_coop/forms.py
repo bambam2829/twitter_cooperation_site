@@ -19,3 +19,8 @@ class TwitteAutoFollowForm(forms.Form):
         if 1 > castMaxFollowInt or castMaxFollowInt > 100:
             raise forms.ValidationError(u'フォロー数は1~100の値で入力してください')
         return maxFollowInt
+
+    def __init__(self, *args, **kwargs):
+        super(TwitteAutoFollowForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs["class"] = "form-control"

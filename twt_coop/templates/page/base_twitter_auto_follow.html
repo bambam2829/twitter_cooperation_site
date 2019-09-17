@@ -1,33 +1,56 @@
+{% load static %}
+{% load bootstrap4 %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
     <meta charset="utf-8">
-    <title>Twitter自動化アプリ</title>
-    <!---<link rel="stylesheet" type="text/css" href="login.css" media="all" />-->
+    <title>TwitterAutoApp</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'twt_coop/css/bootstrap.css' %}" />
 </head>
 
 <body>
-    <h1>Twitter自動フォロー</h1>
-    <div id="form">
+    <div class="container page-header list-unstyled"  style="padding:10px 0">
+        <h1>Twitter自動フォロー</h1>
+    </div>
+    <div id="form" class="container" style="padding:20px 0">
         <form action="{% url 'at_twitter_val_validation' %}" method="post" name="auto_follow">
             {% csrf_token %}
-            <table>
-                {{form.as_table}}
-            </table>
-            <button class="but" ,type="submit">実行</button>
-            <p>※連打すると設定値以上にフォローしてしまいますので、ご注意を。</p>
+            {{ form }}
+            <p class="float-left" style="padding:20px 0">※連打すると設定値以上にフォローしてしまいますので、ご注意を。</p>
+            <div style="padding:20px 0"></div>
+            <div class="float-right">
+                <button class="btn btn-primary btn-lg" type="submit">実行</button>
+            </div>
+            <div style="padding:50px 0"></div>
         </form>
     </div>
-    <div id="result">
-        <table border="1">
-            <thead>
+    <div id="result" class="container">
+        <table border="1" class="table table-striped">
+            <thead class="thead-dark">
                 <tr>
-                    <th>Twitter_ID</th>Ï
+                    <th>Twitter_ID</th>
                     <th>フォロー結果</th>
                 </tr>
             </thead>
-            {% block result %}{% endblock %}
+            <tbody>
+                {% block result %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% endblock %}
+            </tbody>
         </table>
     </div>
 
