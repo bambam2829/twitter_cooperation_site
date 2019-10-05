@@ -32,7 +32,7 @@ class AutoFollowView():
         request_token_url = "https://api.twitter.com/oauth/request_token"
 
         # Twitter Application Management で設定したコールバックURLsのどれか
-        oauth_callback = "http://http://apppy-tw-bat.com/mushapp/twitter_controller/"
+        oauth_callback = "http://apppy-tw-bat.com/mushapp/twitter_controller/"
         # oauth_callback = "http://18.191.1.21/"
         twitter = OAuth1Session(consumer_key, consumer_secret)
 
