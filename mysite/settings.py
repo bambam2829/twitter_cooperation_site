@@ -162,14 +162,19 @@ LOGGING = {
     'loggers': {
         # 自作したログ出力
         'twt_coop': {
-            'handlers': ['file'],
+            'handlers': ['file','console'],
             'level': 'DEBUG',
             'propagate': False,
         },
         # Djangoの警告・エラー
         'mysite': {
-            'handlers': ['file'],
-            'level': 'INFO',
+            'handlers': ['file','console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'django': {
+            'handlers': ['file','console'],
+            'level': 'DEBUG',
             'propagate': False,
         },
     },

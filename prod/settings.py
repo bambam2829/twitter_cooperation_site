@@ -25,7 +25,7 @@ SECRET_KEY = '8lyu01df81a%zias$z=ti!2&^y+lcwp$pxq=29u0#e_$@(p+u_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['118.27.13.76']
+ALLOWED_HOSTS = ['118.27.13.76','apppy-tw-bat.com']
 
 
 # Application definition
@@ -158,13 +158,18 @@ LOGGING = {
     'loggers': {
         # 自作したログ出力
         'mysite': {
-            'handlers': ['file'],
+            'handlers': ['file','console'],
             'level': 'DEBUG',
             'propagate': False,
         },
         # Djangoの警告・エラー
+        'twt_coop': {
+            'handlers': ['file','console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
         'django': {
-            'handlers': ['file'],
+            'handlers': ['file','console'],
             'level': 'DEBUG',
             'propagate': False,
         },
